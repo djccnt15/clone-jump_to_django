@@ -2,3 +2,8 @@
 /include
 /lib
 /scripts
+pyvenv.cfg
+*.pyc
+
+# project files
+secrets.json

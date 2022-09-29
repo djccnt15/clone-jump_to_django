@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a)a75!_s7sm8rgd!gw7##m0b3nqzxybw($o+_+2oj^oo34)210'
+secret_file = os.path.join(BASE_DIR, 'secrets.json')  # set location of secrets.json
+with open(secret_file) as f:  # get data from secrets list
+    secrets = json.loads(f.read())
+
+def get_secret(var, secrets=secrets):
+    """get secret variable or ImproperlyConfigured error"""
+    try:
+        return secrets[var]
+    except KeyError:
+        error_msg = f'set {var} environment variable'
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_secret(var="SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'board_qna.apps.BoardQnaConfig',
 ]
 
 MIDDLEWARE = [
