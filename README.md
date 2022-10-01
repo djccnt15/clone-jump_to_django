@@ -6,7 +6,7 @@
 
 Django는 Python과 버전 호환성이 있어 주의해야 한다. 이 프로젝트에서는 아래 버전들을 사용하기로 한다.  
 
-- Python==3.9.9
+- Python==3.10.7
 - Django==4.1.1
 
 Django와 Python의 전체 버전 호환성은 아래표와 같다.[출처](https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django)  
@@ -33,5 +33,5 @@ Django와 Python의 전체 버전 호환성은 아래표와 같다.[출처](http
 
 별도로 포트를 설정하지 않으면 아래 주소의 로컬호스트로 개발 서버가 구동된다.  
 
-- [http:127.0.0.1:8000/](http:127.0.0.1:8000/)
-- [http:localhost:8000/](http:localhost:8000/)
+- [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- [http://localhost:8000/](http://localhost:8000/)

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-urlpatterns = [
+urlpatterns = [  # include() is a function for including url file in each app
     path('admin/', admin.site.urls),
-    path('board_qna/', include('board_qna.urls')),  # include() is a function for including url file in each app
+    path('board_qna/', include('board_qna.urls')),
 ]
