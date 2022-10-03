@@ -25,7 +25,8 @@ def answer_create(request, question_id):
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
-            answer.create_date = timezone.now()
+            answer.user = request.user
+            answer.date_create = timezone.now()
             answer.question = question
             answer.save()
             return redirect('board_qna:detail', question_id=question.id)
@@ -40,6 +41,7 @@ def question_create(request):
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)  # temporal saving with commit=False option
+            question.user = request.user  # 'request.user' returns current login user
             question.date_create = timezone.now()  # add time data to form
             question.save()
             return redirect('board_qna:index')

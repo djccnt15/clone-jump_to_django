@@ -3,6 +3,7 @@
 /lib
 /scripts
 pyvenv.cfg
+__pycache__/
 *.pyc
 
 # project files

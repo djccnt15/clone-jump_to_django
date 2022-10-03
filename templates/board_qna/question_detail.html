@@ -30,20 +30,7 @@
   <!-- answer create -->
   <form action="{% url 'board_qna:answer_create' question.id %}" method="post" class="my-3">
     {% csrf_token %}
-    <!-- start error -->
-    {% if form.errors %}
-    <div class="alert alert-danger" role="alert">
-        {% for field in form %}
-        {% if field.errors %}
-        <div>
-            <strong>{{ field.label }}</strong>
-            {{ field.errors }}
-        </div>
-        {% endif %}
-        {% endfor %}
-    </div>
-    {% endif %}
-    <!-- end error -->
+    {% include "form_errors.html" %}
     <div class="mb-3">
       <label for="content" class="form-label">답변 내용</label>
       <textarea name="content" id="content" class="form-control" rows="10"></textarea>

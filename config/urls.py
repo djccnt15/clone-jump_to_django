@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [  # include() is a function for including url file in each app
     path('admin/', admin.site.urls),
+    path('', include('homepage.urls')),
     path('board_qna/', include('board_qna.urls')),
+    path('common/', include('common.urls')),
 ]
