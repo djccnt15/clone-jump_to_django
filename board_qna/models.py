@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 
 
 class Question(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    """
+    model for question
+    """
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     subject = models.CharField(max_length=200)
     content = models.TextField()
     date_create = models.DateTimeField()
@@ -15,7 +19,11 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    """
+    model for answer
+    """
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField()
     date_create = models.DateTimeField()

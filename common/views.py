@@ -5,7 +5,6 @@ from .forms import UserForm, CheckPasswordForm
 
 # Create your views here.
 
-
 login_view = auth_views.LoginView.as_view(template_name='common/login.html')
 logout_view = auth_views.LogoutView.as_view()
 
