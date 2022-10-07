@@ -7,26 +7,38 @@ from .forms import QuestionForm, AnswerForm
 # Create your views here.
 
 
-def index(request):  # index view for question_list
+def index(request):
+    """
+    index view for question_list
+    """
+
     question_list = Question.objects.order_by('-date_create')  # order by date_create desc
     context = {'question_list': question_list}
     return render(request, 'board_qna/question_list.html', context)
 
 
-def detail(request, question_id):  # view for each question
+def detail(request, question_id):
+    """
+    view for details of each question
+    """
+
     question = get_object_or_404(Question, pk=question_id)  # returns 404 instead of 500 when requested not existing question_id
     context = {'question': question}
     return render(request, 'board_qna/question_detail.html', context)
 
 
 def answer_create(request, question_id):
+    """
+    view for create answer
+    """
+
     question = get_object_or_404(Question, pk=question_id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
-            answer = form.save(commit=False)
-            answer.user = request.user
-            answer.date_create = timezone.now()
+            answer = form.save(commit=False)  # temporal saving with commit=False option
+            answer.user = request.user  # 'request.user' returns current login user
+            answer.date_create = timezone.now()  # add time data to form
             answer.question = question
             answer.save()
             return redirect('board_qna:detail', question_id=question.id)
@@ -37,6 +49,10 @@ def answer_create(request, question_id):
 
 
 def question_create(request):
+    """
+    view for create question
+    """
+
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
