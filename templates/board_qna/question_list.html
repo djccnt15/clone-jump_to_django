@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container my-3">
+<div class="container my-3 text-nowrap">
   <table class="table">
     <thead>
     <tr class="table-dark text-center" >
@@ -12,23 +12,23 @@
     </thead>
     <tbody>
     {% if question_list %}
-    {% for question in question_list %}
-    <tr>
-      <td width="10%">{{ question.id }}</td>
-      <td width="10%">{{ question.user }}</td>
-      <td width="40%">
-        <a href="{% url 'board_qna:detail' question.id %}">{{ question.subject }}</a>
-        {% if question.answer_set.count > 0 %}
-        <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
-        {% endif %}
-      </td>
-      <td width="40%">{{ question.date_create }}</td>
-    </tr>
-    {% endfor %}
+      {% for question in question_list %}
+        <tr>
+          <td class="text-center">{{ question.id }}</td>
+          <td class="text-center">{{ question.user }}</td>
+          <td width="70%">
+            <a href="{% url 'board_qna:detail' question.id %}">{{ question.subject }}</a>
+            {% if question.answer_set.count > 0 %}
+              <span class="text-danger small mx-2">{{ question.answer_set.count }}</span>
+            {% endif %}
+          </td>
+          <td class="text-center" width="5%">{{ question.date_create|date:'Y-m-d H:i:s' }}</td>
+        </tr>
+      {% endfor %}
     {% else %}
-    <tr>
-      <td colspan="3">질문이 없습니다.</td>
-    </tr>
+      <tr>
+        <td colspan="3">질문이 없습니다.</td>
+      </tr>
     {% endif %}
     </tbody>
   </table>

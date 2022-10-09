@@ -37,6 +37,7 @@ def get_secret(var, secrets=secrets):
 
 SECRET_KEY = get_secret(var="SECRET_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -138,11 +139,15 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# redirection for login_required()
+LOGIN_URL = '/common/login/'
 
 # redirection after login/logout
 LOGIN_REDIRECT_URL = '/'

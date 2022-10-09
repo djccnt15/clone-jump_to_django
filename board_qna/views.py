@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from django.http import HttpResponseNotAllowed
+from django.contrib.auth.decorators import login_required
 from .models import Question
 from .forms import QuestionForm, AnswerForm
 
@@ -27,6 +27,7 @@ def detail(request, question_id):
     return render(request, 'board_qna/question_detail.html', context)
 
 
+@login_required(login_url='common:login')
 def answer_create(request, question_id):
     """
     view for create answer
@@ -43,11 +44,12 @@ def answer_create(request, question_id):
             answer.save()
             return redirect('board_qna:detail', question_id=question.id)
     else:
-        return HttpResponseNotAllowed('Only POST is possible.')
+        form = AnswerForm()
     context = {'question': question, 'form': form}
     return render(request, 'board_qna/question_detail.html', context)
 
 
+@login_required(login_url='common:login')
 def question_create(request):
     """
     view for create question
