@@ -1,10 +1,9 @@
 # environments
-/include
-/lib
-/scripts
+include
+lib
+scripts
 pyvenv.cfg
-__pycache__/
-*.pyc
+__pycache__
 
 # project files
 secrets.json

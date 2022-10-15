@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container my-3">
+  <!-- message for invalid approach -->
+  {% if messages %}
+    <div class="alert alert-danger my-3" role="alert">
+      {% for message in messages %}
+        <strong>{{ message.tags }}</strong>
+        <ul><li>{{ message.message }}</li></ul>
+      {% endfor %}
+    </div>
+  {% endif %}
   <!-- question -->
   <h2 class="border-bottom py-2">{{ question.subject }}</h2>
   <div class="card my-3">
@@ -9,8 +18,16 @@
       <div class="d-flex justify-content-end">
         <div class="badge bg-light text-dark p-2 text-start">
           <div class="mb-2">작성자: {{ question.user.username }}</div>
-          <div>작성일: {{ question.date_create|date:'Y-m-d H:i:s' }}</div>
+          <div class="mb-2">작성일: {{ question.date_create|date:'Y-m-d H:i:s' }}</div>
+          {% if question.date_modify %}
+            <div class="mb-2">수정일: {{ question.date_modify|date:'Y-m-d H:i:s' }}</div>
+          {% endif %}
         </div>
+      </div>
+      <div class="my-3">
+        {% if request.user == question.user %}
+          <a href="{% url 'board_qna:question_modify' question.id  %}" class="btn btn-sm btn-outline-secondary">수정</a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -23,14 +40,14 @@
         <div class="d-flex justify-content-end">
           <div class="badge bg-light text-dark p-2 text-start">
             <div class="mb-2">작성자: {{ answer.user.username }}</div>
-            <div>작성일: {{ answer.date_create|date:'Y-m-d H:i:s' }}</div>
+            <div class="mb-2">작성일: {{ answer.date_create|date:'Y-m-d H:i:s' }}</div>
           </div>
         </div>
       </div>
     </div>
   {% endfor %}
   <!-- answer create -->
-  <form action="{% url 'board_qna:answer_create' question.id %}" method="post" class="my-3">
+  <form action="{% url 'board_qna:answer_create' question.id %}" method="POST" class="my-3">
     {% csrf_token %}
     {% include "form_errors.html" %}
     <div class="mb-3">

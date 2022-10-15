@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib import messages
 from .models import Question
 from .forms import QuestionForm, AnswerForm
 
@@ -32,7 +33,7 @@ def detail(request, question_id):
     return render(request, 'board_qna/question_detail.html', context)
 
 
-@login_required(login_url='common:login')
+@login_required()
 def answer_create(request, question_id):
     """
     view for create answer
@@ -54,7 +55,7 @@ def answer_create(request, question_id):
     return render(request, 'board_qna/question_detail.html', context)
 
 
-@login_required(login_url='common:login')
+@login_required()
 def question_create(request):
     """
     view for create question
@@ -70,5 +71,24 @@ def question_create(request):
             return redirect('board_qna:index')
     else:
         form = QuestionForm()
+    context = {'form': form}
+    return render(request, 'board_qna/question_form.html', context)
+
+
+@login_required()
+def question_modify(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.user:  # blocking invalid approach
+        messages.error(request, '수정 권한이 없습니다')
+        return redirect('board_qna:detail', question_id=question.id)
+    if request.method == "POST":
+        form = QuestionForm(data=request.POST, instance=question)  # override instance by requested POST
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.date_modify = timezone.now()  # add current time to form
+            question.save()
+            return redirect('board_qna:detail', question_id=question.id)
+    else:
+        form = QuestionForm(instance=question)  # fill form with current context
     context = {'form': form}
     return render(request, 'board_qna/question_form.html', context)

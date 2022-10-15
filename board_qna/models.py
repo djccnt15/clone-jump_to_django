@@ -13,6 +13,7 @@ class Question(models.Model):
     subject = models.CharField(max_length=200)
     content = models.TextField()
     date_create = models.DateTimeField()
+    date_modify = models.DateTimeField(null=True, blank=True)  # null is for DB, blank is for validation
 
     def __str__(self):
         return self.subject
@@ -27,6 +28,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField()
     date_create = models.DateTimeField()
+    date_modify = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.content
