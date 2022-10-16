@@ -15,7 +15,7 @@ def index(request):
     """
 
     page = request.GET.get(key='page', default='1')  # get value of 'page' from HTTP Request
-    question_list = Question.objects.order_by('-date_create')  # order by date_create desc
+    question_list = Question.objects.order_by('-id')  # order by id desc
     paginator = Paginator(object_list=question_list, per_page=10)  # number of object per page
     page_obj = paginator.get_page(number=page)  # page to return
     total_pages = paginator.num_pages  # get number of total pages
@@ -92,3 +92,13 @@ def question_modify(request, question_id):
         form = QuestionForm(instance=question)  # fill form with current context
     context = {'form': form}
     return render(request, 'board_qna/question_form.html', context)
+
+
+@login_required()
+def question_delete(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.user:
+        messages.error(request, '삭제 권한이 없습니다')
+        return redirect('board_qna:detail', question_id=question.id)
+    question.delete()
+    return redirect('board_qna:index')
