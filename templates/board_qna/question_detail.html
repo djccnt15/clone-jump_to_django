@@ -46,7 +46,20 @@
             <div class="badge bg-light text-dark p-2 text-start">
               <div class="mb-2">작성자: {{ answer.user.username }}</div>
               <div class="mb-2">작성일: {{ answer.date_create|date:'Y-m-d H:i:s' }}</div>
+              {% if answer.date_modify %}
+                <div class="mb-2">수정일: {{ answer.date_modify|date:'Y-m-d H:i:s' }}</div>
+              {% endif %}
             </div>
+          </div>
+          <div class="my-3">
+            {% if request.user == answer.user %}
+            <a
+              href="{% url 'board_qna:answer_modify' answer.id  %}"
+              class="btn btn-sm btn-outline-secondary">수정</a>
+            <button
+              class="delete btn btn-sm btn-outline-secondary"
+              data-uri="{% url 'board_qna:answer_delete' answer.id  %}">삭제</button>
+            {% endif %}
           </div>
         </div>
       </div>

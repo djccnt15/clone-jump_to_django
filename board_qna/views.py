@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
-from .models import Question
+from .models import Question, Answer
 from .forms import QuestionForm, AnswerForm
 
 # Create your views here.
@@ -15,7 +15,7 @@ def index(request):
     """
 
     page = request.GET.get(key='page', default='1')  # get value of 'page' from HTTP Request
-    question_list = Question.objects.order_by('-id')  # order by id desc
+    question_list = Question.objects.order_by('-id').exclude()  # order by id desc
     paginator = Paginator(object_list=question_list, per_page=10)  # number of object per page
     page_obj = paginator.get_page(number=page)  # page to return
     total_pages = paginator.num_pages  # get number of total pages
@@ -82,7 +82,7 @@ def question_modify(request, question_id):
         messages.error(request, '수정 권한이 없습니다')
         return redirect('board_qna:detail', question_id=question.id)
     if request.method == "POST":
-        form = QuestionForm(data=request.POST, instance=question)  # override instance by requested POST
+        form = QuestionForm(data=request.POST, instance=question)  # override instance with requested POST
         if form.is_valid():
             question = form.save(commit=False)
             question.date_modify = timezone.now()  # add current time to form
@@ -102,3 +102,32 @@ def question_delete(request, question_id):
         return redirect('board_qna:detail', question_id=question.id)
     question.delete()
     return redirect('board_qna:index')
+
+
+@login_required()
+def answer_modify(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user != answer.user:
+        messages.error(request, '수정 권한이 없습니다')
+        return redirect('board_qna:detail', question_id=answer.question.id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.date_modify = timezone.now()
+            answer.save()
+            return redirect('board_qna:detail', question_id=answer.question.id)
+    else:
+        form = AnswerForm(instance=answer)
+    context = {'answer': answer, 'form': form}
+    return render(request, 'board_qna/answer_form.html', context)
+
+
+@login_required()
+def answer_delete(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user != answer.user:
+        messages.error(request, '삭제 권한이 없습니다')
+    else:
+        answer.delete()
+    return redirect('board_qna:detail', question_id=answer.question.id)

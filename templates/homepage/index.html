@@ -2,7 +2,7 @@
 {% block content %}
   <ul>
     {% for url in url_list%}
-      <li><a href="{{ url.pattern }}">{{ url.namespace }}</a><br></li>
+      <li><a href="{{ url.pattern }}">{{ url.namespace }}</a></li>
     {% endfor %}
   </ul>
 {% endblock %}
