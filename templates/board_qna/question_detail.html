@@ -27,11 +27,11 @@
         <div class="my-3">
           {% if request.user == question.user %}
             <a
-              href="{% url 'board_qna:question_modify' question.id  %}"
+              href="{% url 'board_qna:question_modify' question.id %}"
               class="btn btn-sm btn-outline-secondary">수정</a>
             <button
               class="delete btn btn-sm btn-outline-secondary"
-              data-uri="{% url 'board_qna:question_delete' question.id  %}">삭제</button>
+              data-uri="{% url 'board_qna:question_delete' question.id %}">삭제</button>
           {% endif %}
         </div>
       </div>
@@ -54,11 +54,11 @@
           <div class="my-3">
             {% if request.user == answer.user %}
             <a
-              href="{% url 'board_qna:answer_modify' answer.id  %}"
+              href="{% url 'board_qna:answer_modify' answer.id %}"
               class="btn btn-sm btn-outline-secondary">수정</a>
             <button
               class="delete btn btn-sm btn-outline-secondary"
-              data-uri="{% url 'board_qna:answer_delete' answer.id  %}">삭제</button>
+              data-uri="{% url 'board_qna:answer_delete' answer.id %}">삭제</button>
             {% endif %}
           </div>
         </div>
