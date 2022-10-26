@@ -56,3 +56,13 @@ def answer_delete(request, answer_id):
     else:
         answer.delete()
     return redirect('board_qna:detail', question_id=answer.question.id)  # type: ignore
+
+
+@login_required()
+def answer_vote(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if request.user == answer.user:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
+    else:
+        answer.voter.add(request.user)
+    return redirect('board_qna:detail', question_id=answer.question.id)  # type: ignore

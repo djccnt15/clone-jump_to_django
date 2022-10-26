@@ -25,6 +25,11 @@
           </div>
         </div>
         <div class="my-3">
+          <button
+            class="recommend btn btn-sm btn-outline-secondary"
+            data-uri="{% url 'board_qna:question_vote' question.id %}">추천
+            <span class="badge rounded-pill bg-success">{{ question.voter.count }}</span>
+          </button>
           {% if request.user == question.user %}
             <a
               href="{% url 'board_qna:question_modify' question.id %}"
@@ -37,8 +42,8 @@
       </div>
     </div>
     <!-- answer -->
-    <h5 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.</h5>
-    {% for answer in question.answer_set.all %}
+    <h5 class="border-bottom my-3 py-2">{{ question.question_answers.count }}개의 답변이 있습니다.</h5>
+    {% for answer in question.question_answers.all %}
       <div class="card my-3">
         <div class="card-body">
           <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
@@ -52,6 +57,11 @@
             </div>
           </div>
           <div class="my-3">
+            <button
+              class="recommend btn btn-sm btn-outline-secondary"
+              data-uri="{% url 'board_qna:answer_vote' answer.id %}">추천
+              <span class="badge rounded-pill bg-success">{{ answer.voter.count }}</span>
+            </button>
             {% if request.user == answer.user %}
             <a
               href="{% url 'board_qna:answer_modify' answer.id %}"
@@ -83,5 +93,6 @@
 {% endblock %}
 {% block script %}
   {% load static %}
-  <script type="text/javascript" src="{% static 'delete_elements.js' %}"></script>
+  <script type="text/javascript" src="{% static 'delete.js' %}"></script>
+  <script type="text/javascript" src="{% static 'recommend.js' %}"></script>
 {% endblock %}
