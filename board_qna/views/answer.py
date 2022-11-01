@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -22,7 +22,8 @@ def answer_create(request, question_id):
             answer.date_create = timezone.now()  # add time data to form
             answer.question = question
             answer.save()
-            return redirect('board_qna:detail', question_id=question.id)  # type: ignore
+            question_url = resolve_url('board_qna:detail', question_id=question.id)  # type: ignore
+            return redirect(f'{question_url}#answer_{answer.id}')
     else:
         form = AnswerForm()
     context = {'question': question, 'form': form}
@@ -41,7 +42,8 @@ def answer_modify(request, answer_id):
             answer = form.save(commit=False)
             answer.date_modify = timezone.now()
             answer.save()
-            return redirect('board_qna:detail', question_id=answer.question.id)
+            question_url = resolve_url('board_qna:detail', question_id=answer.question.id)
+            return redirect(f'{question_url}#answer_{answer.id}')
     else:
         form = AnswerForm(instance=answer)
     context = {'answer': answer, 'form': form}
@@ -65,4 +67,5 @@ def answer_vote(request, answer_id):
         messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
     else:
         answer.voter.add(request.user)
-    return redirect('board_qna:detail', question_id=answer.question.id)  # type: ignore
+    question_url = resolve_url('board_qna:detail', question_id=answer.question.id)  # type: ignore
+    return redirect(f'{question_url}#answer_{answer.id}')  # type: ignore
