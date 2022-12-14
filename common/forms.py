@@ -17,16 +17,12 @@ class UserForm(UserCreationForm):
         fields = ("username", "password1", "password2", "email")
 
 class CheckPasswordForm(forms.Form):
-    """
-    form for validation by checking password
-    """
+    """form for validation by checking password"""
 
     password = forms.CharField(label='비밀번호', widget=forms.PasswordInput())
 
     def __init__(self, user, *args, **kwargs):
-        """
-        inherit __init__ from base form and add self.user
-        """
+        """inherit __init__ from base form and add self.user"""
 
         super().__init__(*args, **kwargs)
         self.user = user

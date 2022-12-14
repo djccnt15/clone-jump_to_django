@@ -10,9 +10,7 @@ logout_view = auth_views.LogoutView.as_view()
 
 
 def user_signup(request):
-    """
-    function for sign up user
-    """
+    """function for sign up user"""
 
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -30,9 +28,7 @@ def user_signup(request):
 
 
 def user_drop(request):
-    """
-    function for drop user
-    """
+    """function for drop user"""
 
     if request.method == 'POST':
         password_form = CheckPasswordForm(request.user, request.POST)

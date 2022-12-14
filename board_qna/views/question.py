@@ -9,9 +9,7 @@ from board_qna.forms import QuestionForm
 
 @login_required()
 def question_create(request):
-    """
-    view for create question
-    """
+    """view for create question"""
 
     if request.method == 'POST':
         form = QuestionForm(request.POST)
