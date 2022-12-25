@@ -9,15 +9,15 @@ Django는 Python과 버전 호환성이 있어 주의해야 한다. 이 프로�
 - Python==3.10.7
 - Django==4.1.1
 
-Django와 Python의 전체 버전 호환성은 아래표와 같다.[출처](https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django)  
+Django와 Python의 전체 버전 호환성은 아래표와 같다.([출처](https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django))  
 
 |Django version|Python versions|
 |-|-|
-|2.2|3.5, 3.6, 3.7, 3.8 (added in 2.2.8), 3.9 (added in 2.2.17)|
-|3.1|3.6, 3.7, 3.8, 3.9 (added in 3.1.3)|
-|3.2|3.6, 3.7, 3.8, 3.9, 3.10 (added in 3.2.9)|
-|4.0, 4.1|3.8, 3.9, 3.10|
-
+|2.2|3.5, 3.6, 3.7, 3.8, 3.9|
+|3.1|3.6, 3.7, 3.8, 3.9|
+|3.2|3.6, 3.7, 3.8, 3.9, 3.10|
+|4.0|3.8, 3.9, 3.10|
+|4.1|3.8, 3.9, 3.10, 3.11|
 
 ## 개발 서버 구동
 
