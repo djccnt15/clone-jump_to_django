@@ -1,13 +1,14 @@
-# 점프 투 장고 클론 코딩
+# 점프 투 장고 실습
 
-웹 개발 입문을 위한 [점프 투 장고](https://wikidocs.net/book/4223) ~~무작정~~ 생각하며 따라하기
+웹 개발 입문을 위한 [점프 투 장고](https://wikidocs.net/book/4223) ~~무작정~~ 생각하며 따라하기  
+공부 기록 및 자세한 설명은 [블로그](https://djccnt15.github.io/tags#Django) 참고  
 
 ## 버전 관리
 
 Django는 Python과 버전 호환성이 있어 주의해야 한다. 이 프로젝트에서는 아래 버전들을 사용하기로 한다.  
 
-- Python==3.10.7
-- Django==4.1.1
+- Python==3.10
+- Django==4.1
 
 Django와 Python의 전체 버전 호환성은 아래표와 같다.([출처](https://docs.djangoproject.com/en/4.1/faq/install/#what-python-version-can-i-use-with-django))  
 
